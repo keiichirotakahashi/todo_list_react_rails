@@ -1,6 +1,12 @@
 # == Route Map
 #
 #                                Prefix Verb   URI Pattern                                                                              Controller#Action
+#                          api_v1_tasks GET    /api/v1/tasks(.:format)                                                                  api/v1/tasks#index
+#                                       POST   /api/v1/tasks(.:format)                                                                  api/v1/tasks#create
+#                           api_v1_task GET    /api/v1/tasks/:id(.:format)                                                              api/v1/tasks#show
+#                                       PATCH  /api/v1/tasks/:id(.:format)                                                              api/v1/tasks#update
+#                                       PUT    /api/v1/tasks/:id(.:format)                                                              api/v1/tasks#update
+#                                       DELETE /api/v1/tasks/:id(.:format)                                                              api/v1/tasks#destroy
 #         rails_postmark_inbound_emails POST   /rails/action_mailbox/postmark/inbound_emails(.:format)                                  action_mailbox/ingresses/postmark/inbound_emails#create
 #            rails_relay_inbound_emails POST   /rails/action_mailbox/relay/inbound_emails(.:format)                                     action_mailbox/ingresses/relay/inbound_emails#create
 #         rails_sendgrid_inbound_emails POST   /rails/action_mailbox/sendgrid/inbound_emails(.:format)                                  action_mailbox/ingresses/sendgrid/inbound_emails#create
@@ -23,5 +29,9 @@
 #                  rails_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                           active_storage/direct_uploads#create
 
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  namespace 'api' do
+    namespace 'v1' do
+      resources :tasks, only: %i[index show create update destroy]
+    end
+  end
 end
