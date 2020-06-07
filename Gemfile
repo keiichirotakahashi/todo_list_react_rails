@@ -22,9 +22,13 @@ gem 'webpacker', '~> 4.0'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'factory_bot_rails'
+  gem 'rspec-rails'
+  gem 'spring-commands-rspec'
 end
 
 group :development do
+  gem 'annotate'
   gem 'listen', '~> 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
@@ -33,6 +37,7 @@ end
 
 group :test do
   gem 'capybara', '>= 2.15'
+  gem 'database_cleaner'
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
