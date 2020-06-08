@@ -29,9 +29,13 @@
 #                  rails_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                           active_storage/direct_uploads#create
 
 Rails.application.routes.draw do
+  # Api
   namespace 'api' do
     namespace 'v1' do
       resources :tasks, only: %i[index show create update destroy]
     end
   end
+
+  # User
+  root 'home#index'
 end
