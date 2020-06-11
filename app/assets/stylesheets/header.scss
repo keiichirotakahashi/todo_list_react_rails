@@ -1,0 +1,41 @@
+// ================================
+//             header
+// ================================
+
+$header_color: #fff0dc;
+$sub_color: #e4996d;
+
+.header {
+  background-color: $header_color;
+  height: 60px;
+
+  @media screen and (max-width: 767px) {
+    height: 50px;
+  }
+
+  .header-navi {
+    height: 100%;
+    width: 90%;
+    max-width: 1080px;
+    margin: 0 auto;
+    display: -webkit-flex;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .header-navi__logo {
+
+      a {
+        display: block;
+        height: 100%;
+        color: $sub_color;
+        font-size: 24px;
+        font-weight: bold;
+
+        @media screen and (max-width: 767px) {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+}

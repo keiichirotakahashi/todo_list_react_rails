@@ -1,3 +1,185 @@
-// Place all the styles related to the Home controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+// ================================
+//              main
+// ================================
+
+$main_color: #fbf5e9;
+$sub_color: #e4996d;
+$red_color: #eb5a46;
+$blue_color: #0079bf;
+$white_color: #fff;
+$dark-gray: #666;
+
+.main {
+  background: $main_color;
+  min-height: 600px;
+  
+  .main-box {
+    width: 90%;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 28px 0;
+  }
+}
+
+.task {
+  color: $dark-gray;
+  background: $white_color;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 20px 30px;
+
+  .task__name {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 12px;
+
+    @media screen and (max-width: 767px) {
+      font-size: 18px;
+    }
+  }
+
+  .task-body {
+    @media screen and (min-width: 768px) {
+      display: -webkit-flex;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .task-body-info {
+      @media screen and (max-width: 767px) {
+        margin-bottom: 16px;
+      }
+
+      .task-body-info-due-date {
+        display: -webkit-flex;
+        display: flex;
+        margin-bottom: 8px;
+
+        .task-body-info-due-date__label {
+          min-width: 88px;
+          font-size: 18px;
+          font-weight: 500;
+          text-align: center;
+
+          @media screen and (max-width: 767px) {
+            font-size: 16px;
+          }
+        }
+
+        .task-body-info-due-date__value {
+          font-size: 18px;
+          font-weight: 500;
+
+          @media screen and (max-width: 767px) {
+            font-size: 16px;
+          }
+        }
+      }
+
+      .task-body-info-created-date {
+        display: -webkit-flex;
+        display: flex;
+
+        .task-body-info-created-date__label {
+          min-width: 88px;
+          font-size: 18px;
+          font-weight: 500;
+          text-align: center;
+
+          @media screen and (max-width: 767px) {
+            font-size: 16px;
+          }
+        }
+
+        .task-body-info-created-date__value {
+          font-size: 18px;
+          font-weight: 500;
+
+          @media screen and (max-width: 767px) {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+
+    .task-body-buttons {
+      @media screen and (min-width: 768px) {
+        display: -webkit-flex;
+        display: flex;
+        align-items: center;
+      }
+
+      .task-body-buttons-top {
+        @media screen and (max-width: 767px) {
+          margin-bottom: 12px;
+        }
+
+        .task-body-buttons-top__status--todo {
+          display: -webkit-flex;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 48px;
+          min-width: 120px;
+          font-size: 18px;
+          font-weight: 500;
+          color: $white_color;
+          background-color: $red_color;
+          border-radius: 10px;
+
+          @media screen and (max-width: 767px) {
+            width: 100%;
+          }
+        }
+
+        .task-body-buttons-top__status--done {
+          display: -webkit-flex;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 48px;
+          min-width: 120px;
+          font-size: 18px;
+          font-weight: 500;
+          color: $white_color;
+          background-color: $blue_color;
+          border-radius: 10px;
+
+          @media screen and (max-width: 767px) {
+            width: 100%;
+          }
+        }
+      }
+
+      .task-body-buttons-bottom {
+        display: -webkit-flex;
+        display: flex;
+        justify-content: space-between;
+
+        .task-body-buttons-bottom__edit,
+        .task-body-buttons-bottom__delete {
+          display: -webkit-flex;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 48px;
+          min-width: 120px;
+          font-size: 18px;
+          font-weight: 500;
+          color: $white_color;
+          background-color: $sub_color;
+          border-radius: 10px;
+
+          @media screen and (min-width: 768px) {
+            margin-left: 20px;
+          }
+
+          @media screen and (max-width: 767px) {
+            min-width: 100px;
+            width: 47%;
+          }
+        }
+      }
+    }
+  }
+}
