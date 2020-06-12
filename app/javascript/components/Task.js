@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 class Task extends React.Component {
   translateStatus = (status) => {
@@ -12,6 +11,7 @@ class Task extends React.Component {
   }
 
   render() {
+    const id = this.props.id;
     const name = this.props.name;
     const dueOn = new Date(this.props.due_on.replace(/-/g, '/'));
     const dueDate = `${dueOn.getFullYear()}年${dueOn.getMonth() + 1}月${dueOn.getDate()}日`;
@@ -46,7 +46,8 @@ class Task extends React.Component {
           </div>
           <div className='task-body-buttons'>
             <div className='task-body-buttons-top'>
-              <button className={`task-body-buttons-top__status--${status}`}>
+              <button className={`task-body-buttons-top__status--${status}`}
+                      onClick={() => {this.props.toggleStatus(id, status)}}>
                 {translatedStatus}
               </button>
             </div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
@@ -15,9 +14,5 @@ class App extends React.Component {
     );
   }
 }
-
-App.propTypes = {
-  name: PropTypes.string
-};
 
 export default App;
