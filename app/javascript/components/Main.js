@@ -42,6 +42,24 @@ class Main extends React.Component {
       })
   }
 
+  removeTask = (id) => {
+    const { data } = this.state;
+    const csrf = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+
+    fetch(`/api/v1/tasks/${id}`, {
+      method: "DELETE",
+      headers: {"X-CSRF-Token": csrf}
+    })
+      .then(response => response.json())
+      .then(response => {
+        this.setState({
+          data: data.filter((task) => {
+            return response.data.id !== task.id;
+          })
+        })
+      })
+  }
+
   render() {
     const { data } = this.state;
 
@@ -53,7 +71,8 @@ class Main extends React.Component {
                status={item.status}
                due_on={item.due_on}
                created_at={item.created_at}
-               toggleStatus={this.toggleStatus} />
+               toggleStatus={this.toggleStatus}
+               removeTask={this.removeTask} />
     });
 
     return(

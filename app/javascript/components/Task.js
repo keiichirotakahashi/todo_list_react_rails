@@ -55,7 +55,8 @@ class Task extends React.Component {
               <button className='task-body-buttons-bottom__edit'>
                 編集
               </button>
-              <button className='task-body-buttons-bottom__delete'>
+              <button className='task-body-buttons-bottom__delete'
+                      onClick={() => {this.props.removeTask(id)}}>
                 削除
               </button>
             </div>
