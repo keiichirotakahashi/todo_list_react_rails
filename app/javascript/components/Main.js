@@ -3,16 +3,17 @@ import Task from './Task';
 
 class Main extends React.Component {
   state = {
-    data: []
+    tasks: []
   }
 
   componentDidMount() {
     fetch('/api/v1/tasks')
       .then(response => response.json())
-      .then(response => {this.setState({data: response.data})})
+      .then(response => {this.setState({tasks: response.data})})
   }
 
   toggleStatus = (id, status) => {
+    const { tasks } = this.state;
     const csrf = document.querySelector("meta[name='csrf-token']").getAttribute("content");
 
     if (status === 'todo') {
@@ -31,19 +32,19 @@ class Main extends React.Component {
     })
       .then(response => response.json())
       .then(response => {
-        const dataCopy = this.state.data.slice().map(e => {
-          if (e.id === id) {
+        const copiedTasks = tasks.map(task => {
+          if (task.id === response.data.id) {
             return response.data;
           } else {
-            return e;
+            return task;
           }
         }); 
-        this.setState({data: dataCopy});
+        this.setState({tasks: copiedTasks});
       })
   }
 
   removeTask = (id) => {
-    const { data } = this.state;
+    const { tasks } = this.state;
     const csrf = document.querySelector("meta[name='csrf-token']").getAttribute("content");
 
     fetch(`/api/v1/tasks/${id}`, {
@@ -53,24 +54,24 @@ class Main extends React.Component {
       .then(response => response.json())
       .then(response => {
         this.setState({
-          data: data.filter((task) => {
-            return response.data.id !== task.id;
+          tasks: tasks.filter((task) => {
+            return task.id !== response.data.id;
           })
         })
       })
   }
 
   render() {
-    const { data } = this.state;
+    const { tasks } = this.state;
 
-    const tasks = data.map((item) => {
+    const taskComponents = tasks.map((task) => {
       return <Task
-               key={item.id}
-               id={item.id}
-               name={item.name}
-               status={item.status}
-               due_on={item.due_on}
-               created_at={item.created_at}
+               key={task.id}
+               id={task.id}
+               name={task.name}
+               status={task.status}
+               due_on={task.due_on}
+               created_at={task.created_at}
                toggleStatus={this.toggleStatus}
                removeTask={this.removeTask} />
     });
@@ -78,7 +79,7 @@ class Main extends React.Component {
     return(
       <main className='main'>
         <div className='main-box'>
-          {tasks}
+          {taskComponents}
         </div>
       </main>
     );
