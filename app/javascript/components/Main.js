@@ -1,10 +1,17 @@
 import React from 'react';
+import Flash from './Flash';
 import Task from './Task';
 
 class Main extends React.Component {
   state = {
-    tasks: []
+    tasks: [],
+    flash: {
+      isVisible: false,
+      status: 'hidden',
+      message: ''
+    }
   }
+  timer = null;
 
   componentDidMount() {
     fetch('/api/v1/tasks')
@@ -12,8 +19,47 @@ class Main extends React.Component {
       .then(response => {this.setState({tasks: response.data})})
   }
 
+  showNoticeFlash(message) {
+    this.setState({
+      flash: {
+        isVisible: true,
+        status: 'notice',
+        message: message
+      }
+    });
+  }
+
+  showErrorFlash(message) {
+    this.setState({
+      flash: {
+        isVisible: true,
+        status: 'error',
+        message: message ? message : 'エラーが発生しました。'
+      }
+    });
+  }
+
+  removeFlash() {
+    this.setState({
+      flash: {
+        isVisible: false,
+        status: 'hidden',
+        message: ''
+      }
+    });
+  }
+
+  removeFlashNow() {
+    clearTimeout(this.timer);
+    this.removeFlash();
+  }
+
+  removeFlashLater() {
+    this.timer = setTimeout(() => {this.removeFlash()}, 3000);
+  }
+
   toggleStatus = (id, status) => {
-    const { tasks } = this.state;
+    const tasks = this.state.tasks;
     const csrf = document.querySelector("meta[name='csrf-token']").getAttribute("content");
 
     if (status === 'todo') {
@@ -21,6 +67,8 @@ class Main extends React.Component {
     } else {
       status = 'todo';
     }
+
+    this.removeFlashNow();
 
     fetch(`/api/v1/tasks/${id}`, {
       method: "PATCH",
@@ -32,20 +80,36 @@ class Main extends React.Component {
     })
       .then(response => response.json())
       .then(response => {
-        const copiedTasks = tasks.map(task => {
-          if (task.id === response.data.id) {
-            return response.data;
-          } else {
-            return task;
-          }
-        }); 
-        this.setState({tasks: copiedTasks});
+        if (response.status === 200) {
+          const copiedTasks = tasks.map(task => {
+            if (task.id === response.data.id) {
+              return response.data;
+            } else {
+              return task;
+            }
+          });
+          this.setState({tasks: copiedTasks});
+          this.showNoticeFlash(response.message);
+          this.removeFlashLater();
+          return;
+        }
+        if (response.status === 400) {
+          this.showErrorFlash(`${response.message}\n${response.data}`);
+          this.removeFlashLater();
+          return;
+        }
+      })
+      .catch((error) => {
+        this.showErrorFlash();
+        this.removeFlashLater();
       })
   }
 
   removeTask = (id) => {
-    const { tasks } = this.state;
+    const tasks = this.state.tasks;
     const csrf = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+
+    this.removeFlashNow();
 
     fetch(`/api/v1/tasks/${id}`, {
       method: "DELETE",
@@ -53,16 +117,31 @@ class Main extends React.Component {
     })
       .then(response => response.json())
       .then(response => {
-        this.setState({
-          tasks: tasks.filter((task) => {
-            return task.id !== response.data.id;
-          })
-        })
+        if (response.status === 200) {
+          this.setState({
+            tasks: tasks.filter((task) => {
+              return task.id !== response.data.id;
+            })
+          });
+          this.showNoticeFlash(response.message);
+          this.removeFlashLater();
+          return;
+        }
+        if (response.status === 400) {
+          this.showErrorFlash(`${response.message}\n${response.data}`);
+          this.removeFlashLater();
+          return;
+        }
+      })
+      .catch((error) => {
+        this.showErrorFlash();
+        this.removeFadedFlash();
       })
   }
 
   render() {
-    const { tasks } = this.state;
+    const tasks = this.state.tasks;
+    const flash = this.state.flash;
 
     const taskComponents = tasks.map((task) => {
       return <Task
@@ -78,6 +157,7 @@ class Main extends React.Component {
 
     return(
       <main className='main'>
+        <Flash flashData={flash} />
         <div className='main-box'>
           {taskComponents}
         </div>

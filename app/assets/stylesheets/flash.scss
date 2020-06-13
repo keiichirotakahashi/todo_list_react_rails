@@ -1,0 +1,71 @@
+// ================================
+//              flash
+// ================================
+
+.flash {
+  visibility: hidden;
+  z-index: 9999;
+  position: absolute;
+  top: 12px;
+  width: 100%;
+  &.is-visible {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 1.0s 2.0s;
+    animation: fadein 0.5s, fadeout 1.0s 2.0s;
+    @-webkit-keyframes fadein {
+      from {top: -28px; opacity: 0;}
+      to {top: 12px; opacity: 1;}
+    }
+    @keyframes fadein {
+      from {top: -28px; opacity: 0;}
+      to {top: 12px; opacity: 1;}
+    }
+    @-webkit-keyframes fadeout {
+      from {top: 12px; opacity: 1;}
+      to {top: -28px; opacity: 0;}
+    }
+    @keyframes fadeout {
+      from {top: 12px; opacity: 1;}
+      to {top: -28px; opacity: 0;}
+    }
+  }
+
+  .flash__message--hidden {
+    visibility: hidden;
+  }
+
+  .flash__message--notice {
+    width: 60%;
+    min-width: 600px;
+    margin: 0 auto;
+    background-color: #d9edf7;
+    color: #31708f;
+    border: 1px solid transparent;
+    border-color: #bcdff1;
+    border-radius: .25rem;
+    padding: 12px 18px;
+
+
+    @media screen and (max-width: 767px) {
+      width: 70%;
+      min-width: initial;
+    }
+  }
+
+  .flash__message--error {
+    width: 60%;
+    min-width: 600px;
+    margin: 0 auto;
+    background-color: #f2dede;
+    color: #a94442;
+    border: 1px solid transparent;
+    border-color: #ebcccc;
+    border-radius: .25rem;
+    padding: 12px 18px;
+
+    @media screen and (max-width: 767px) {
+      width: 70%;
+      min-width: initial;
+    }
+  }
+}

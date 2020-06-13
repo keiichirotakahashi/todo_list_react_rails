@@ -1,25 +1,12 @@
 // ================================
-//              main
+//              task
 // ================================
 
-$main_color: #fbf5e9;
 $sub_color: #e4996d;
 $red_color: #eb5a46;
 $blue_color: #0079bf;
 $white_color: #fff;
 $dark-gray: #666;
-
-.main {
-  background: $main_color;
-  min-height: 600px;
-  
-  .main-box {
-    width: 90%;
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 28px 0;
-  }
-}
 
 .task {
   color: $dark-gray;
