@@ -12,6 +12,7 @@ class Main extends React.Component {
     }
   }
   timer = null;
+  csrf = document.querySelector("meta[name='csrf-token']").getAttribute("content");
 
   componentDidMount() {
     fetch('/api/v1/tasks')
@@ -60,7 +61,6 @@ class Main extends React.Component {
 
   toggleStatus = (id, status) => {
     const tasks = this.state.tasks;
-    const csrf = document.querySelector("meta[name='csrf-token']").getAttribute("content");
 
     if (status === 'todo') {
       status = 'done';
@@ -74,7 +74,7 @@ class Main extends React.Component {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
-        "X-CSRF-Token": csrf
+        "X-CSRF-Token": this.csrf
       },
       body: JSON.stringify({task: {status: status}})
     })
@@ -107,13 +107,12 @@ class Main extends React.Component {
 
   removeTask = (id) => {
     const tasks = this.state.tasks;
-    const csrf = document.querySelector("meta[name='csrf-token']").getAttribute("content");
 
     this.removeFlashNow();
 
     fetch(`/api/v1/tasks/${id}`, {
       method: "DELETE",
-      headers: {"X-CSRF-Token": csrf}
+      headers: {"X-CSRF-Token": this.csrf}
     })
       .then(response => response.json())
       .then(response => {
@@ -146,11 +145,7 @@ class Main extends React.Component {
     const taskComponents = tasks.map((task) => {
       return <Task
                key={task.id}
-               id={task.id}
-               name={task.name}
-               status={task.status}
-               due_on={task.due_on}
-               created_at={task.created_at}
+               taskData={task}
                toggleStatus={this.toggleStatus}
                removeTask={this.removeTask} />
     });

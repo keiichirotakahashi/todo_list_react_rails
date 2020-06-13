@@ -11,14 +11,14 @@ class Task extends React.Component {
   }
 
   render() {
-    const id = this.props.id;
-    const name = this.props.name;
-    const dueOn = new Date(this.props.due_on.replace(/-/g, '/'));
+    const id = this.props.taskData.id;
+    const name = this.props.taskData.name;
+    const dueOn = new Date(this.props.taskData.due_on.replace(/-/g, '/'));
     const dueDate = `${dueOn.getFullYear()}年${dueOn.getMonth() + 1}月${dueOn.getDate()}日`;
-    const createdAt = new Date(this.props.created_at);
+    const createdAt = new Date(this.props.taskData.created_at);
     const createdDate = `${createdAt.getFullYear()}年${createdAt.getMonth() + 1}月${createdAt.getDate()}日`;
-    const status = this.props.status;
-    const translatedStatus = this.translateStatus(this.props.status);
+    const status = this.props.taskData.status;
+    const translatedStatus = this.translateStatus(this.props.taskData.status);
 
     return(
       <div className='task'>
