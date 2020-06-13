@@ -1,0 +1,42 @@
+// ================================
+//             footer
+// ================================
+
+$footer_color: #f9e3be;
+$purple_color: #474ba5;
+
+.footer { 
+  background-color: $footer_color;
+
+  .footer-navi {
+    width: 90%;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 28px 0;
+    text-align: center;
+
+    @media screen and (max-width: 767px) {
+      padding: 24px 0;
+    }
+
+    .footer-navi__logo {
+      color: $purple_color;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 16px;
+
+      @media screen and (max-width: 767px) {
+        font-size: 20px;
+      }
+    }
+
+    .footer-navi__copyright {
+      color: rgba(71, 75, 165, 0.6);
+      font-size: 14px;
+
+      @media screen and (max-width: 767px) {
+        font-size: 12px;
+      }
+    }
+  }
+}

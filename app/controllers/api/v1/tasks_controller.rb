@@ -3,33 +3,39 @@ class Api::V1::TasksController < Api::V1::BaseController
 
   def index
     tasks = Task.order(created_at: :desc)
-    render json: { data: tasks }
+    render status: 200, json: { status: 200, data: tasks }
   end
 
   def show
-    render json: { data: @task }
+    render status: 200, json: { status: 200, data: @task }
   end
 
   def create
     task = Task.new(task_params)
     if task.save
-      render json: { message: "#{task.name}を作成しました。", data: task }
+      render status: 200, json: { status: 200, message: "#{task.name}を作成しました。", data: task }
     else
-      render json: { message: "#{task.name}の作成に失敗しました。", data: task.errors.full_messages }
+      render status: 400, json: {
+        status: 400, message: "#{task.name}の作成に失敗しました。", data: task.errors.full_messages
+      }
     end
   end
 
   def update
     if @task.update(task_params)
-      render json: { message: "#{@task.name}を更新しました。", data: @task }
+      render status: 200, json: { status: 200, message: "#{@task.name}を更新しました。", data: @task }
     else
-      render json: { message: "#{@task.name}の更新に失敗しました。", data: @task.errors.full_messages }
+      render status: 400, json: {
+        status: 400,
+        message: "#{@task.attribute_in_database(:name)}の更新に失敗しました。",
+        data: @task.errors.full_messages
+      }
     end
   end
 
   def destroy
     @task.destroy
-    render json: { message: "#{@task.name}を削除しました。", data: @task }
+    render status: 200, json: { status: 200, message: "#{@task.name}を削除しました。", data: @task }
   end
 
   private
