@@ -16,7 +16,7 @@ class Api::V1::TasksController < Api::V1::BaseController
       render status: 200, json: { status: 200, message: "#{task.name}を作成しました。", data: task }
     else
       render status: 400, json: {
-        status: 400, message: "#{task.name}の作成に失敗しました。", data: task.errors.full_messages
+        status: 400, message: 'ToDoの作成に失敗しました。', data: task.errors.full_messages
       }
     end
   end
