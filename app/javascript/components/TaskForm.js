@@ -2,7 +2,7 @@ import React from 'react';
 
 class TaskForm extends React.Component {
   render() {
-    const { name, dueDate } = this.props.taskFormData;
+    const { name, due_on } = this.props.taskFormData;
 
     return(
       <div className='task-form'>
@@ -10,7 +10,7 @@ class TaskForm extends React.Component {
           新しいToDoを作成する
         </h2>
         <form className='task-form-body'
-              onSubmit={() => {this.props.handleSubmit(event)}}>
+          onSubmit={() => {this.props.handleTaskFormSubmit(event)}}>
           <div className='task-form-body-fields'>
             <div className='task-form-body-fields-name'>
               <div className='task-form-body-fields-name__label'>
@@ -18,9 +18,9 @@ class TaskForm extends React.Component {
               </div>
               <div className='task-form-body-fields-name__value'>
                 <input type='text'
-                       name='name'
-                       value={name}
-                       onChange={() => {this.props.handleChange(event)}} />
+                  name='name'
+                  value={name}
+                  onChange={() => {this.props.handleTaskFormChange(event)}} />
               </div>
             </div>
             <div className='task-form-body-fields-due-date'>
@@ -29,15 +29,15 @@ class TaskForm extends React.Component {
               </div>
               <div className='task-form-body-fields-due-date__value'>
                 <input type='date'
-                       name='due_on'
-                       value={dueDate}
-                       onChange={() => {this.props.handleChange(event)}} />
+                  name='due_on'
+                  value={due_on}
+                  onChange={() => {this.props.handleTaskFormChange(event)}} />
               </div>
             </div>
           </div>
           <div className='task-form-body-buttons'>
             <button className='task-form-body-buttons__submit'
-                    type='submit'>
+              type='submit'>
               作成
             </button>
           </div>
