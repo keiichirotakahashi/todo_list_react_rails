@@ -1,9 +1,11 @@
 import React from 'react';
+import FormErrors from './FormErrors';
 
 class TaskFormModal extends React.Component {
   render() {
     const id = this.props.id;
     const { name, due_on } = this.props.modalTaskFormData;
+    const formErrors = this.props.formErrorsData;
     let taskFormModal;
 
     if (this.props.isTaskFormModalOpen) {
@@ -22,6 +24,7 @@ class TaskFormModal extends React.Component {
             <form className='task-form-modal-form-body'
               onSubmit={() => {this.props.handleModalTaskFormSubmit(event, id)}}>
               <div className='task-form-modal-form-body-fields'>
+                <FormErrors formErrorsData={formErrors} />
                 <div className='task-form-modal-form-body-fields-name'>
                   <div className='task-form-modal-form-body-fields-name__label'>
                     ToDo名

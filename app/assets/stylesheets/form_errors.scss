@@ -1,0 +1,14 @@
+// ================================
+//              flash
+// ================================
+
+$red_color: #eb5a46;
+
+.form-errors {
+  margin-bottom: 12px;
+
+  .form-errors__message {
+    margin-bottom: 4px;
+    color: $red_color;
+  }
+}

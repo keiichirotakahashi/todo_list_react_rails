@@ -23,6 +23,7 @@ class Task extends React.Component {
   handleClickModalClose = () => {
     this.setState({isTaskFormModalOpen: false});
     this.props.resetModalTaskForm();
+    this.props.removeModalTaskFormErrors();
   }
 
   render() {
@@ -84,6 +85,7 @@ class Task extends React.Component {
           isTaskFormModalOpen={isTaskFormModalOpen}
           handleClickModalClose={this.handleClickModalClose}
           modalTaskFormData={this.props.modalTaskFormData}
+          formErrorsData={this.props.formErrorsData}
           handleModalTaskFormChange={this.props.handleModalTaskFormChange}
           handleModalTaskFormSubmit={this.props.handleModalTaskFormSubmit} />
       </div>

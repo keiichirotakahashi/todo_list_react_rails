@@ -25,6 +25,11 @@ $light-gray: #dbdbdb;
     height: 7.5vh;
     min-height: 60px;
     margin: 27.5vh auto 0;
+
+    @media screen and (max-width: 767px) {
+      margin: 25vh auto 0;
+    }
+
     .task-form-modal-close__button {
       color: $white_color;
       font-size: 40px;
@@ -42,14 +47,12 @@ $light-gray: #dbdbdb;
     border-radius: 10px;
     width: 80%;
     max-width: 800px;
-    height: calc(20vh - 40px);
     min-height: 120px;
     margin: 0 auto 45vh;
     padding: 20px 30px;
   
     @media screen and (max-width: 767px) {
       padding: 20px 15px;
-      height: calc(25vh - 40px);
       min-height: 172px;
       margin: 0 auto 40vh;
     }

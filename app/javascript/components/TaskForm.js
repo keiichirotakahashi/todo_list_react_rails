@@ -1,8 +1,10 @@
 import React from 'react';
+import FormErrors from './FormErrors';
 
 class TaskForm extends React.Component {
   render() {
     const { name, due_on } = this.props.taskFormData;
+    const formErrors = this.props.formErrorsData;
 
     return(
       <div className='task-form'>
@@ -12,6 +14,7 @@ class TaskForm extends React.Component {
         <form className='task-form-body'
           onSubmit={() => {this.props.handleTaskFormSubmit(event)}}>
           <div className='task-form-body-fields'>
+            <FormErrors formErrorsData={formErrors} />
             <div className='task-form-body-fields-name'>
               <div className='task-form-body-fields-name__label'>
                 ToDo名

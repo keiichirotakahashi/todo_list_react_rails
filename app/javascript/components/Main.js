@@ -10,10 +10,12 @@ class Main extends React.Component {
       name: '',
       due_on: ''
     },
+    taskFormErrors: [],
     modalTaskForm: {
       name: '',
       due_on: ''
     },
+    modalTaskFormErrors: [],
     flash: {
       isVisible: false,
       status: 'hidden',
@@ -92,6 +94,7 @@ class Main extends React.Component {
   createTask = (task) => {
     const tasks = this.state.tasks;
 
+    this.setState({taskFormErrors: []});
     this.removeFlashNow();
 
     fetch('/api/v1/tasks', {
@@ -118,6 +121,7 @@ class Main extends React.Component {
           return;
         }
         if (response.status === 400) {
+          this.setState({taskFormErrors: response.data});
           this.showErrorFlash(response.message);
           this.removeFlashLater();
           return;
@@ -176,9 +180,14 @@ class Main extends React.Component {
     this.updateTask(id, attributes);
   }
 
+  removeModalTaskFormErrors = () => {
+    this.setState({modalTaskFormErrors: []});
+  }
+
   updateTask = (id, attributes) => {
     const tasks = this.state.tasks;
 
+    this.removeModalTaskFormErrors();
     this.removeFlashNow();
 
     fetch(`/api/v1/tasks/${id}`, {
@@ -205,6 +214,7 @@ class Main extends React.Component {
           return;
         }
         if (response.status === 400) {
+          this.setState({modalTaskFormErrors: response.data});
           this.showErrorFlash(response.message);
           this.removeFlashLater();
           return;
@@ -261,7 +271,9 @@ class Main extends React.Component {
   render() {
     const tasks = this.state.tasks;
     const taskForm = this.state.taskForm;
+    const taskFormErrors = this.state.taskFormErrors;
     const modalTaskForm = this.state.modalTaskForm;
+    const modalTaskFormErrors = this.state.modalTaskFormErrors;
     const flash = this.state.flash;
 
     const taskComponents = tasks.map((task) => {
@@ -271,9 +283,11 @@ class Main extends React.Component {
                toggleStatus={this.toggleStatus}
                removeTask={this.removeTask}
                modalTaskFormData={modalTaskForm}
+               formErrorsData={modalTaskFormErrors}
                setModalTaskForm={this.setModalTaskForm}
                handleModalTaskFormChange={this.handleModalTaskFormChange}
                handleModalTaskFormSubmit={this.handleModalTaskFormSubmit}
+               removeModalTaskFormErrors={this.removeModalTaskFormErrors}
                resetModalTaskForm={this.resetModalTaskForm} />
     });
 
@@ -283,6 +297,7 @@ class Main extends React.Component {
         <div className='main-box'>
           <TaskForm
             taskFormData={taskForm}
+            formErrorsData={taskFormErrors}
             handleTaskFormChange={this.handleTaskFormChange}
             handleTaskFormSubmit={this.handleTaskFormSubmit} />
           {taskComponents}
