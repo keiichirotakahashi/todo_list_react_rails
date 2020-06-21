@@ -5,7 +5,7 @@ ja:
     attributes: &attributes
       task:
         id: ID
-        name: タスク名
+        name: ToDo名
         status: ステータス
         due_on: 期限
         created_at: 作成日時
