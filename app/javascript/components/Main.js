@@ -35,7 +35,6 @@ class Main extends React.Component {
       })
       .catch((error) => {
         this.showErrorFlash();
-        this.removeFlashLater();
       })
   }
 
@@ -47,6 +46,7 @@ class Main extends React.Component {
         message: message
       }
     });
+    this.removeFlashLater();
   }
 
   showErrorFlash(message) {
@@ -57,6 +57,7 @@ class Main extends React.Component {
         message: message ? message : 'エラーが発生しました。'
       }
     });
+    this.removeFlashLater();
   }
 
   removeFlash() {
@@ -117,19 +118,16 @@ class Main extends React.Component {
             }
           });
           this.showNoticeFlash(response.message);
-          this.removeFlashLater();
           return;
         }
         if (response.status === 400) {
           this.setState({taskFormErrors: response.data});
           this.showErrorFlash(response.message);
-          this.removeFlashLater();
           return;
         }
       })
       .catch((error) => {
         this.showErrorFlash();
-        this.removeFlashLater();
       })
   }
 
@@ -151,7 +149,6 @@ class Main extends React.Component {
       })
       .catch((error) => {
         this.showErrorFlash();
-        this.removeFlashLater();
       })
   }
 
@@ -210,19 +207,16 @@ class Main extends React.Component {
           });
           this.setState({tasks: copiedTasks});
           this.showNoticeFlash(response.message);
-          this.removeFlashLater();
           return;
         }
         if (response.status === 400) {
           this.setState({modalTaskFormErrors: response.data});
           this.showErrorFlash(response.message);
-          this.removeFlashLater();
           return;
         }
       })
       .catch((error) => {
         this.showErrorFlash();
-        this.removeFlashLater();
       })
   }
 
@@ -253,18 +247,15 @@ class Main extends React.Component {
             })
           });
           this.showNoticeFlash(response.message);
-          this.removeFlashLater();
           return;
         }
         if (response.status === 400) {
           this.showErrorFlash(response.message);
-          this.removeFlashLater();
           return;
         }
       })
       .catch((error) => {
         this.showErrorFlash();
-        this.removeFadedFlash();
       })
   }
 
@@ -276,20 +267,20 @@ class Main extends React.Component {
     const modalTaskFormErrors = this.state.modalTaskFormErrors;
     const flash = this.state.flash;
 
-    const taskComponents = tasks.map((task) => {
-      return <Task
-               key={task.id}
-               taskData={task}
-               toggleStatus={this.toggleStatus}
-               removeTask={this.removeTask}
-               modalTaskFormData={modalTaskForm}
-               formErrorsData={modalTaskFormErrors}
-               setModalTaskForm={this.setModalTaskForm}
-               handleModalTaskFormChange={this.handleModalTaskFormChange}
-               handleModalTaskFormSubmit={this.handleModalTaskFormSubmit}
-               removeModalTaskFormErrors={this.removeModalTaskFormErrors}
-               resetModalTaskForm={this.resetModalTaskForm} />
-    });
+    const taskComponents = tasks.map((task) =>
+      <Task
+        key={task.id}
+        taskData={task}
+        toggleStatus={this.toggleStatus}
+        removeTask={this.removeTask}
+        modalTaskFormData={modalTaskForm}
+        formErrorsData={modalTaskFormErrors}
+        setModalTaskForm={this.setModalTaskForm}
+        handleModalTaskFormChange={this.handleModalTaskFormChange}
+        handleModalTaskFormSubmit={this.handleModalTaskFormSubmit}
+        removeModalTaskFormErrors={this.removeModalTaskFormErrors}
+        resetModalTaskForm={this.resetModalTaskForm} />
+    );
 
     return(
       <main className='main'>
