@@ -3,39 +3,33 @@ class Api::V1::TasksController < Api::V1::BaseController
 
   def index
     tasks = Task.order(created_at: :desc)
-    render json: { status: 200, data: tasks }
+    render json: tasks, status: 200
   end
 
   def show
-    render json: { status: 200, data: @task }
+    render json: @task, status: 200
   end
 
   def create
     task = Task.new(task_params)
     if task.save
-      render json: { status: 200, message: "#{task.name}を作成しました。", data: task }
+      render json: task, status: :ok
     else
-      render json: {
-        status: 400, message: 'ToDoの作成に失敗しました。', data: task.errors.full_messages
-      }
+      render json: task.errors.full_messages, status: :bad_request
     end
   end
 
   def update
     if @task.update(task_params)
-      render json: { status: 200, message: "#{@task.name}を更新しました。", data: @task }
+      render json: @task, status: 200
     else
-      render json: {
-        status: 400,
-        message: "#{@task.attribute_in_database(:name)}の更新に失敗しました。",
-        data: @task.errors.full_messages
-      }
+      render json: @task.errors.full_messages, status: 400
     end
   end
 
   def destroy
     @task.destroy
-    render json: { status: 200, message: "#{@task.name}を削除しました。", data: @task }
+    render json: @task, status: 200
   end
 
   private
