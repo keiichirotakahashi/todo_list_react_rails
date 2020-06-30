@@ -25,20 +25,16 @@ const Main = () => {
 
   useEffect(() => {
     const getTasks = async () => {
-      const response = await fetch('/api/v1/tasks').catch(new Error());
-      if (response.ok) {
-        return response.json();
-      }
-      throw response;
-    }
-    
-    getTasks()
-      .then(json => {
+      try {
+        const response = await fetch('/api/v1/tasks');
+        const json = await response.json();
         setTasks(json);
-      })
-      .catch(error => {
+      } catch (error) {
         showErrorFlash();
-      })
+      }
+    }
+
+    getTasks();
   }, []);
 
   const showNoticeFlash = (message) => {
@@ -81,29 +77,23 @@ const Main = () => {
     setTaskForm({...taskForm, [name]: value});
   }
 
-  const handleTaskFormSubmit = (event) => {
+  const handleTaskFormSubmit = async (event) => {
     event.preventDefault();
     setTaskFormErrors([]);
     removeFlashNow();
 
-    const postTask = async (task) => {
+    try {
       const response = await fetch('/api/v1/tasks', {
         method: "POST",
         headers: {
           "Content-Type": "application/json; charset=utf-8",
           "X-CSRF-Token": csrf
         },
-        body: JSON.stringify({task: task})
-      })
-        .catch(new Error());
-      if (response.ok) {
-        return response.json();
-      }
-      throw response;
-    }
+        body: JSON.stringify({task: taskForm})
+      });
 
-    postTask(taskForm)
-      .then(json => {
+      if (response.ok) {
+        const json = await response.json();
         tasks.unshift(json);
         setTasks(tasks);
         setTaskForm({
@@ -111,42 +101,30 @@ const Main = () => {
           due_on: ''
         });
         showNoticeFlash('ToDoを作成しました。');
-      })
-      .catch(error => {
-        if (error.status === 400) {
-          error
-            .json()
-            .then(json => {
-              setTaskFormErrors(json);
-              showErrorFlash('ToDoの作成に失敗しました。');
-              return;
-            })
-        }
-        showErrorFlash();
-      });
+        return;
+      }
+
+      const json = await response.json();
+      setTaskFormErrors(json);
+      showErrorFlash('ToDoの作成に失敗しました。');
+    } catch(error) {
+      showErrorFlash();
+    }   
   }
 
-  const buildModalTaskForm = (id) => {
+  const buildModalTaskForm = async (id) => {
     removeFlashNow();
 
-    const getTask = async (id) => {
-      const response = await fetch(`/api/v1/tasks/${id}`).catch(new Error());
-      if (response.ok) {
-        return response.json();
-      }
-      throw response;
+    try {
+      const response = await fetch(`/api/v1/tasks/${id}`);
+      const json = await response.json();
+      setModalTaskForm({
+        name: json.name,
+        due_on: json.due_on
+      });
+    } catch(error) {
+      showErrorFlash();
     }
-
-    getTask(id)
-      .then(json => {
-        setModalTaskForm({
-          name: json.name,
-          due_on: json.due_on
-        });
-      })
-      .catch(error => {
-        showErrorFlash();
-      })
   }
 
   const handleModalTaskFormChange = (event) => {
@@ -156,23 +134,23 @@ const Main = () => {
 
   const handleModalTaskFormSubmit = (event, id) => {
     event.preventDefault();
-    updateTask(id, modalTaskForm);
+    patchTask(id, modalTaskForm);
   }
 
   const toggleStatus = (id, status) => {
     const toggledStatus = status === 'todo' ? 'done' : 'todo';
-    updateTask(id, {status: toggledStatus});
+    patchTask(id, {status: toggledStatus});
   }
 
   const removeModalTaskFormErrors = () => {
     setModalTaskFormErrors([]);
   }
 
-  const updateTask = (id, attributes) => {
+  const patchTask = async (id, attributes) => {
     removeModalTaskFormErrors();
     removeFlashNow();
 
-    const patchTask = async (id, attributes) => {
+    try {
       const response = await fetch(`/api/v1/tasks/${id}`, {
         method: "PATCH",
         headers: {
@@ -180,38 +158,25 @@ const Main = () => {
           "X-CSRF-Token": csrf
         },
         body: JSON.stringify({task: attributes})
-      })
-        .catch(new Error());
-      if (response.ok) {
-        return response.json();
-      }
-      throw response;
-    }
+      });
 
-    patchTask(id, attributes)
-      .then(json => {
+      if (response.ok) {
+        const json = await response.json();
         const copiedTasks = tasks.map(task => {
-          if (task.id === json.id) {
-            return json;
-          } else {
-            return task;
-          }
+          if (task.id === json.id) return json;
+          return task;
         });
         setTasks(copiedTasks);
         showNoticeFlash('ToDoを更新しました。');
-      })
-      .catch(error => {
-        if (error.status === 400) {
-          error
-            .json()
-            .then(json => {
-              setModalTaskFormErrors(json);
-              showErrorFlash('ToDoの更新に失敗しました。');
-              return;
-            })
-        }
-        showErrorFlash();
-      })
+        return;
+      }
+
+      const json = await response.json();
+      setModalTaskFormErrors(json);
+      showErrorFlash('ToDoの更新に失敗しました。');
+    } catch(error) {
+      showErrorFlash();
+    }
   }
 
   const resetModalTaskForm = () => {
@@ -221,31 +186,22 @@ const Main = () => {
     });
   }
 
-  const removeTask = (id) => {
+  const removeTask = async (id) => {
     removeFlashNow();
 
-    const deleteTask = async (id) => {
+    try {
       const response = await fetch(`/api/v1/tasks/${id}`, {
         method: "DELETE",
         headers: {"X-CSRF-Token": csrf}
-      })
-        .catch(new Error());
-      if (response.ok) {
-        return response.json();
-      }
-      throw response;
+      });
+      const json = await response.json();
+      setTasks(tasks.filter(task => {
+        return task.id !== json.id;
+      }));
+      showNoticeFlash('ToDoを削除しました。');
+    } catch(error) {
+      showErrorFlash();
     }
-
-    deleteTask(id)
-      .then(json => {
-        setTasks(tasks.filter(task => {
-          return task.id !== json.id;
-        }));
-        showNoticeFlash('ToDoを削除しました。');
-      })
-      .catch(error => {
-        showErrorFlash();
-      })
   }
 
   const taskComponents = tasks.map((task) =>
