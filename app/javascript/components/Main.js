@@ -25,11 +25,11 @@ const Main = () => {
 
   useEffect(() => {
     const getTasks = async () => {
-      const response = await fetch('/api/v1/tasks');
+      const response = await fetch('/api/v1/tasks').catch(new Error());
       if (response.ok) {
         return response.json();
       }
-      throw new Error();
+      throw response;
     }
     
     getTasks()
@@ -83,10 +83,6 @@ const Main = () => {
 
   const handleTaskFormSubmit = (event) => {
     event.preventDefault();
-    createTask(taskForm);
-  }
-
-  const createTask = (task) => {
     setTaskFormErrors([]);
     removeFlashNow();
 
@@ -98,17 +94,15 @@ const Main = () => {
           "X-CSRF-Token": csrf
         },
         body: JSON.stringify({task: task})
-      });
+      })
+        .catch(new Error());
       if (response.ok) {
         return response.json();
       }
-      if (response.status === 400) {
-        throw response;
-      }
-      throw new Error();
+      throw response;
     }
 
-    postTask(task)
+    postTask(taskForm)
       .then(json => {
         tasks.unshift(json);
         setTasks(tasks);
@@ -129,18 +123,18 @@ const Main = () => {
             })
         }
         showErrorFlash();
-      })
+      });
   }
 
   const buildModalTaskForm = (id) => {
     removeFlashNow();
 
     const getTask = async (id) => {
-      const response = await fetch(`/api/v1/tasks/${id}`);
+      const response = await fetch(`/api/v1/tasks/${id}`).catch(new Error());
       if (response.ok) {
         return response.json();
       }
-      throw new Error();
+      throw response;
     }
 
     getTask(id)
@@ -166,16 +160,8 @@ const Main = () => {
   }
 
   const toggleStatus = (id, status) => {
-    const attributes = {status: null};
-    let toggledStatus;
-
-    if (status === 'todo') {
-      toggledStatus = 'done';
-    } else {
-      toggledStatus = 'todo';
-    }
-    attributes.status = toggledStatus;
-    updateTask(id, attributes);
+    const toggledStatus = status === 'todo' ? 'done' : 'todo';
+    updateTask(id, {status: toggledStatus});
   }
 
   const removeModalTaskFormErrors = () => {
@@ -194,14 +180,12 @@ const Main = () => {
           "X-CSRF-Token": csrf
         },
         body: JSON.stringify({task: attributes})
-      });
+      })
+        .catch(new Error());
       if (response.ok) {
         return response.json();
       }
-      if (response.status === 400) {
-        throw response;
-      }
-      throw new Error();
+      throw response;
     }
 
     patchTask(id, attributes)
@@ -221,10 +205,10 @@ const Main = () => {
           error
             .json()
             .then(json => {
-            setModalTaskFormErrors(json);
-            showErrorFlash('ToDoの更新に失敗しました。');
-            return;
-          })
+              setModalTaskFormErrors(json);
+              showErrorFlash('ToDoの更新に失敗しました。');
+              return;
+            })
         }
         showErrorFlash();
       })
@@ -244,11 +228,12 @@ const Main = () => {
       const response = await fetch(`/api/v1/tasks/${id}`, {
         method: "DELETE",
         headers: {"X-CSRF-Token": csrf}
-      });
+      })
+        .catch(new Error());
       if (response.ok) {
         return response.json();
       }
-      throw new Error();
+      throw response;
     }
 
     deleteTask(id)

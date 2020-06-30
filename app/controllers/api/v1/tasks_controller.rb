@@ -3,11 +3,11 @@ class Api::V1::TasksController < Api::V1::BaseController
 
   def index
     tasks = Task.order(created_at: :desc)
-    render json: tasks, status: 200
+    render json: tasks, status: :ok
   end
 
   def show
-    render json: @task, status: 200
+    render json: @task, status: :ok
   end
 
   def create
@@ -21,15 +21,15 @@ class Api::V1::TasksController < Api::V1::BaseController
 
   def update
     if @task.update(task_params)
-      render json: @task, status: 200
+      render json: @task, status: :ok
     else
-      render json: @task.errors.full_messages, status: 400
+      render json: @task.errors.full_messages, status: :bad_request
     end
   end
 
   def destroy
     @task.destroy
-    render json: @task, status: 200
+    render json: @task, status: :ok
   end
 
   private
