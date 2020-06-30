@@ -2,7 +2,6 @@ import React from 'react';
 
 const FormErrors = (props) => {
   const formErrors = props.formErrorsData;
-  let formErrorsMessage;
 
   const formattedFormErrors = formErrors.map((error, index) =>
     <div key={index} className='form-errors__message'>
@@ -10,17 +9,15 @@ const FormErrors = (props) => {
     </div>
   );
 
-  if (formErrors.length) {
-    formErrorsMessage = (
-      <div className='form-errors'>
-        {formattedFormErrors}
-      </div>
-    )
-  }
-
   return (
     <React.Fragment>
-      {formErrorsMessage}
+      {
+        formErrors.length === 0 ? '' : (
+          <div className='form-errors'>
+            {formattedFormErrors}
+          </div>
+        )
+      }
     </React.Fragment>
   );
 }
