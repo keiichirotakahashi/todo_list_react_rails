@@ -38,4 +38,14 @@ Rails.application.routes.draw do
 
   # User
   root 'home#index'
+  devise_for :users, skip: [:registrations, :sessions]
+  devise_scope :user do
+    get '/signup', to: 'users/registrations#new'
+    post '/signup', to: 'users/registrations#create'
+    get '/profile/edit', to: 'users/registrations#edit'
+    patch '/profile', to: 'users/registrations#update'
+    get '/login', to: 'users/sessions#new'
+    post '/login', to: 'users/sessions#create'
+    delete '/logout', to: 'users/sessions#destroy'
+  end
 end

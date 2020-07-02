@@ -1,0 +1,119 @@
+// ================================
+//               new
+// ================================
+
+$main_color: #fbf5e9;
+$sub_color: #e4996d;
+$white_color: #fff;
+$dark-gray: #666;
+$purple_color: #474ba5;
+
+.signup {
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $main_color;
+  height: 100vh;
+
+  .signup-box {
+    background: $white_color;
+    color: $dark-gray;
+    border-radius: 10px;
+    max-width: 258px;
+    margin-bottom: 30px;
+    padding: 20px 30px;
+
+    @media screen and (max-width: 767px) {
+      width: 80%;
+      max-width: 320px;
+      margin: 0 auto 30px;
+      padding: 20px 20px;
+    }
+
+    .signup-box__heading {
+      text-align: center;
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+
+    .signup-box-form {
+      margin-bottom: 16px;
+
+      .signup-box-form-field {
+        margin-bottom: 12px;
+
+        @media screen and (max-width: 767px) {
+          display: -webkit-flex;
+          display: flex;
+          width: 100%;
+        }
+
+        input {
+          font-size: 16px;
+          min-width: 240px;
+          border: solid 1px #dbdbdb;
+          border-radius: 5px;
+          padding: 8px;
+
+          @media screen and (max-width: 767px) {
+            width: 100%;
+          }
+        }
+      }
+      .field_with_errors {
+        display: contents;
+        margin-bottom: 12px;
+      }
+
+      .signup-box-form-actions {
+
+        @media screen and (max-width: 767px) {
+          display: -webkit-flex;
+          display: flex;
+          width: 100%;
+        }
+
+        input[type="submit"] {
+          display: -webkit-flex;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-width: 256px;
+          font-size: 16px;
+          font-weight: bold;
+          color: $white_color;
+          background: $sub_color;
+          border-radius: 5px;
+          padding: 8px;
+          cursor: pointer;
+
+          &:hover {
+            opacity: 0.75;
+          }
+
+          &:focus {
+            outline: 0;
+          }
+
+          @media screen and (max-width: 767px) {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    .signup-box-links {
+      text-align: center;
+
+      .signup-box-links__login {
+        color: $purple_color;
+
+        &:visited {
+          color: $purple_color;
+        }
+      }
+    }
+  }
+}

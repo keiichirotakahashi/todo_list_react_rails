@@ -5,6 +5,7 @@ ruby '2.6.5'
 
 # base
 gem 'bootsnap', '>= 1.4.2', require: false
+gem 'devise'
 gem 'dotenv-rails'
 gem 'jbuilder', '~> 2.7'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.1'
