@@ -25,6 +25,12 @@ RSpec.describe User, type: :model do
   let(:password_attribute) { nil }
   let(:user_attributes) { attributes_for(:user, username: username_attribute, password: password_attribute) }
 
+  describe 'associations' do
+    describe 'has_many' do
+      it { is_expected.to have_many(:projects).dependent(:destroy) }
+    end
+  end
+
   describe 'validations' do
     context 'when attributes are valid' do
       subject { User.new(username: 'testuser', password: 'hogehoge') }
