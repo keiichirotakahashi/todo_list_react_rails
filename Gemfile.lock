@@ -102,6 +102,7 @@ GEM
     factory_bot_rails (5.2.0)
       factory_bot (~> 5.2.0)
       railties (>= 4.2.0)
+    ffaker (2.15.0)
     ffi (1.13.0)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
@@ -209,6 +210,8 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
+    shoulda-matchers (4.3.0)
+      activesupport (>= 4.2.0)
     slim (4.1.0)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
@@ -268,6 +271,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   factory_bot_rails
+  ffaker
   jbuilder (~> 2.7)
   listen (~> 3.2)
   pg (>= 0.18, < 2.0)
@@ -277,6 +281,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (>= 6)
   selenium-webdriver
+  shoulda-matchers
   slim
   spring
   spring-commands-rspec
