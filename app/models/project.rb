@@ -18,6 +18,7 @@
 #
 class Project < ApplicationRecord
   belongs_to :user
+  has_many :tasks, dependent: :destroy
 
   validates :name, length: { minimum: 1, maximum: 255 }
 end

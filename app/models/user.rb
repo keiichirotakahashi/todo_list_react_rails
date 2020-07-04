@@ -19,6 +19,8 @@
 #  index_users_on_username  (username) UNIQUE
 #
 class User < ApplicationRecord
+  has_many :projects, dependent: :destroy
+
   validates :username, length: { minimum: 1, maximum: 60 }, uniqueness: { case_sensitive: false },
     format: { with: /\A[a-z0-9]+\z/i }
 
