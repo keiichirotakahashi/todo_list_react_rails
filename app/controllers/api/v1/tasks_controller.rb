@@ -1,8 +1,9 @@
 class Api::V1::TasksController < Api::V1::BaseController
+  before_action :set_project
   before_action :set_task, only: %i[show update destroy]
 
   def index
-    tasks = Task.order(created_at: :desc)
+    tasks = Task.where(project_id: @project.id).order(created_at: :desc)
     render json: tasks, status: :ok
   end
 
@@ -11,7 +12,7 @@ class Api::V1::TasksController < Api::V1::BaseController
   end
 
   def create
-    task = Task.new(task_params)
+    task = @project.tasks.build(task_params)
     if task.save
       render json: task, status: :ok
     else
@@ -34,8 +35,14 @@ class Api::V1::TasksController < Api::V1::BaseController
 
   private
 
+  def set_project
+    @project = Project.find(params[:project_id])
+    return @project if @project.user_id == current_user.id
+    render json: 'Forbidden request', status: :forbidden and return
+  end
+
   def set_task
-    @task = Task.find(params[:id])
+    @task = Task.where(project_id: @project.id).find(params[:id])
   end
 
   def task_params
