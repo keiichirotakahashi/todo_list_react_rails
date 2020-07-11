@@ -1,5 +1,5 @@
 // ================================
-//              task
+//            task-card
 // ================================
 
 $sub_color: #e4996d;
@@ -8,7 +8,7 @@ $blue_color: #0079bf;
 $white_color: #fff;
 $dark-gray: #666;
 
-.task {
+.task-card {
   color: $dark-gray;
   background: $white_color;
   border-radius: 10px;
@@ -19,7 +19,7 @@ $dark-gray: #666;
     padding: 20px 15px;
   }
 
-  .task__name {
+  .task-card__name {
     font-size: 20px;
     font-weight: 500;
     margin-bottom: 12px;
@@ -29,24 +29,24 @@ $dark-gray: #666;
     }
   }
 
-  .task-body {
+  .task-card-body {
     @media screen and (min-width: 768px) {
       display: -webkit-flex;
       display: flex;
       justify-content: space-between;
     }
 
-    .task-body-info {
+    .task-card-body-info {
       @media screen and (max-width: 767px) {
         margin-bottom: 16px;
       }
 
-      .task-body-info-due-date {
+      .task-card-body-info-due-date {
         display: -webkit-flex;
         display: flex;
         margin-bottom: 8px;
 
-        .task-body-info-due-date__label {
+        .task-card-body-info-due-date__label {
           min-width: 88px;
           font-size: 18px;
           font-weight: 500;
@@ -58,7 +58,7 @@ $dark-gray: #666;
           }
         }
 
-        .task-body-info-due-date__value {
+        .task-card-body-info-due-date__value {
           font-size: 18px;
           font-weight: 500;
 
@@ -68,11 +68,11 @@ $dark-gray: #666;
         }
       }
 
-      .task-body-info-created-date {
+      .task-card-body-info-created-date {
         display: -webkit-flex;
         display: flex;
 
-        .task-body-info-created-date__label {
+        .task-card-body-info-created-date__label {
           min-width: 88px;
           font-size: 18px;
           font-weight: 500;
@@ -84,7 +84,7 @@ $dark-gray: #666;
           }
         }
 
-        .task-body-info-created-date__value {
+        .task-card-body-info-created-date__value {
           font-size: 18px;
           font-weight: 500;
 
@@ -95,19 +95,19 @@ $dark-gray: #666;
       }
     }
 
-    .task-body-buttons {
+    .task-card-body-buttons {
       @media screen and (min-width: 768px) {
         display: -webkit-flex;
         display: flex;
         align-items: center;
       }
 
-      .task-body-buttons-top {
+      .task-card-body-buttons-top {
         @media screen and (max-width: 767px) {
           margin-bottom: 12px;
         }
 
-        .task-body-buttons-top__status--todo {
+        .task-card-body-buttons-top__status--todo {
           display: -webkit-flex;
           display: flex;
           align-items: center;
@@ -134,7 +134,7 @@ $dark-gray: #666;
           }
         }
 
-        .task-body-buttons-top__status--done {
+        .task-card-body-buttons-top__status--done {
           display: -webkit-flex;
           display: flex;
           align-items: center;
@@ -162,13 +162,13 @@ $dark-gray: #666;
         }
       }
 
-      .task-body-buttons-bottom {
+      .task-card-body-buttons-bottom {
         display: -webkit-flex;
         display: flex;
         justify-content: space-between;
 
-        .task-body-buttons-bottom__edit,
-        .task-body-buttons-bottom__delete {
+        .task-card-body-buttons-bottom__edit,
+        .task-card-body-buttons-bottom__delete {
           display: -webkit-flex;
           display: flex;
           align-items: center;

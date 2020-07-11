@@ -1,0 +1,15 @@
+// ================================
+//             project
+// ================================
+
+$purple_color: #474ba5;
+
+.project {
+
+  .project__title {
+    color: $purple_color;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+}

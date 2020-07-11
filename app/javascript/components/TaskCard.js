@@ -32,42 +32,42 @@ const TaskCard = (props) => {
   }
 
   return(
-    <div className='task'>
-      <h2 className='task__name'>
+    <div className='task-card'>
+      <h2 className='task-card__name'>
         {name}
       </h2>
-      <div className='task-body'>
-        <div className='task-body-info'>
-          <div className='task-body-info-due-date'>
-            <div className='task-body-info-due-date__label'>
+      <div className='task-card-body'>
+        <div className='task-card-body-info'>
+          <div className='task-card-body-info-due-date'>
+            <div className='task-card-body-info-due-date__label'>
               期限：
             </div>
-            <div className='task-body-info-due-date__value'>
+            <div className='task-card-body-info-due-date__value'>
               {dueDate}
             </div>
           </div>
-          <div className='task-body-info-created-date'>
-            <div className='task-body-info-created-date__label'>
+          <div className='task-card-body-info-created-date'>
+            <div className='task-card-body-info-created-date__label'>
               作成日：
             </div>
-            <div className='task-body-info-created-date__value'>
+            <div className='task-card-body-info-created-date__value'>
               {createdDate}
             </div>
           </div>
         </div>
-        <div className='task-body-buttons'>
-          <div className='task-body-buttons-top'>
-            <button className={`task-body-buttons-top__status--${status}`}
+        <div className='task-card-body-buttons'>
+          <div className='task-card-body-buttons-top'>
+            <button className={`task-card-body-buttons-top__status--${status}`}
               onClick={() => {props.toggleStatus(id, status)}}>
               {translateStatus(props.taskData.status)}
             </button>
           </div>
-          <div className='task-body-buttons-bottom'>
-            <button className='task-body-buttons-bottom__edit'
+          <div className='task-card-body-buttons-bottom'>
+            <button className='task-card-body-buttons-bottom__edit'
               onClick={() => {handleClickEdit(id)}}>
               編集
             </button>
-            <button className='task-body-buttons-bottom__delete'
+            <button className='task-card-body-buttons-bottom__delete'
               onClick={() => {props.removeTask(id)}}>
               削除
             </button>

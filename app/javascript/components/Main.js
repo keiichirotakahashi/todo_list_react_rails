@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { HashRouter as Router, Route } from 'react-router-dom';
 import Flash from './Flash';
-import Task from './Task';
+import ProjectTop from './ProjectTop';
+import Project from './Project';
 
 const Main = () => {
   const [flash, setFlash] = useState({
@@ -49,10 +51,20 @@ const Main = () => {
     <main className='main'>
       <Flash flashData={flash} />
       <div className='main-box'>
-        <Task
-          showNoticeFlash={showNoticeFlash}
-          showErrorFlash={showErrorFlash}
-          removeFlashNow={removeFlashNow} />
+        <Router>
+          <Route exact path='/'
+            render={() => (
+              <ProjectTop showErrorFlash={showErrorFlash} />
+            )} />
+          <Route exact path='/projects/:id'
+            render={(routeProps) => (
+              <Project
+                match={routeProps.match}
+                showNoticeFlash={showNoticeFlash}
+                showErrorFlash={showErrorFlash}
+                removeFlashNow={removeFlashNow} />
+            )} />
+        </Router>
       </div>
     </main>
   );
