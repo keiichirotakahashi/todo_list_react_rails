@@ -54,7 +54,10 @@ const Main = () => {
         <Router>
           <Route exact path='/'
             render={() => (
-              <ProjectTop showErrorFlash={showErrorFlash} />
+              <ProjectTop
+                showNoticeFlash={showNoticeFlash}
+                showErrorFlash={showErrorFlash}
+                removeFlashNow={removeFlashNow} />
             )} />
           <Route exact path='/projects/:id'
             render={(routeProps) => (
