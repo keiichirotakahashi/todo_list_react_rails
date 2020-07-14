@@ -11,7 +11,7 @@ class Api::V1::ProjectsController < Api::V1::BaseController
   end
 
   def create
-    project = Project.new(project_params)
+    project = current_user.projects.build(project_params)
     if project.save
       render json: project, status: :ok
     else
@@ -41,6 +41,6 @@ class Api::V1::ProjectsController < Api::V1::BaseController
   end
 
   def project_params
-    params.require(:project).permit(:name, :user_id)
+    params.require(:project).permit(:name)
   end
 end
