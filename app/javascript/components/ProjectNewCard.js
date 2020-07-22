@@ -2,20 +2,20 @@ import React, { useState } from 'react';
 import Modal from './Modal';
 import ProjectForm from './ProjectForm';
 
-const ProjectNewCard = (props) => {
+const ProjectNewCard = props => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const projectForm = props.projectFormData;
   const formErrors = props.formErrorsData;
 
   const handleClickNew = () => {
     setIsModalOpen(true);
-  }
+  };
 
   const handleClickModalClose = () => {
     setIsModalOpen(false);
     props.resetProjectForm();
     props.removeFormErrors();
-  }
+  };
 
   let modal;
   if (isModalOpen) {
@@ -23,13 +23,15 @@ const ProjectNewCard = (props) => {
       <Modal
         modalBody={
           <ProjectForm
+            formName={'プロジェクトを新規作成する'}
+            buttonText={'作成'}
             projectFormData={projectForm}
             formErrorsData={formErrors}
             handleProjectFormChange={props.handleProjectFormChange}
             handleProjectFormSubmit={props.handleProjectFormSubmit} />
         }
         handleClickModalClose={handleClickModalClose} />
-    )
+    );
   }
 
   return (
@@ -43,6 +45,6 @@ const ProjectNewCard = (props) => {
       {modal}
     </div>
   );
-}
+};
 
 export default ProjectNewCard;

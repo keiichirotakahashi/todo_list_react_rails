@@ -5,8 +5,10 @@
 $white_color: #fff;
 $dark-gray: #666;
 $light-gray: #dbdbdb;
+$off-white: #fdfdfd;
 
 .project-card {
+  position: relative;
   background: $white_color;
   width: 160px;
   height: 160px;
@@ -14,7 +16,7 @@ $light-gray: #dbdbdb;
   margin: 0 15px 30px;
   cursor: pointer;
   &:hover {
-    opacity: 0.75;
+    background: $off-white;
   }
 
   @media screen and (max-width: 767px) {
@@ -43,5 +45,17 @@ $light-gray: #dbdbdb;
         font-size: 18px;
       }
     }
+  }
+
+  .project-card-more {
+    position: absolute;
+    top: 4px;
+    right: 8px;
+  }
+
+  .project-card-menu {
+    position: absolute;
+    top: 36px;
+    right: 8px;
   }
 }

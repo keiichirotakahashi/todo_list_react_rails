@@ -1,18 +1,21 @@
 import React from 'react';
 import FormErrors from './FormErrors';
 
-const ProjectForm = (props) => {
+const ProjectForm = props => {
+  const formName = props.formName;
+  const buttonText = props.buttonText;
+  const id = props.id ? props.id : null;
   const { name } = props.projectFormData;
   const formErrors = props.formErrorsData;
 
   return (
     <div className='project-form'>
       <h2 className='project-form__name'>
-        プロジェクトを新規作成する
+        {formName}
       </h2>
       <FormErrors formErrorsData={formErrors} />
       <form className='project-form-body'
-        onSubmit={() => {props.handleProjectFormSubmit(event)}}>
+        onSubmit={() => {props.handleProjectFormSubmit(event, id)}}>
         <div className='project-form-body-fields'>
           <div className='project-form-body-fields-name'>
             <div className='project-form-body-fields-name__label'>
@@ -22,19 +25,19 @@ const ProjectForm = (props) => {
               <input type='text'
                 name='name'
                 value={name}
-                onChange={() => {props.handleProjectFormChange(event)}}  />
+                onChange={() => {props.handleProjectFormChange(event)}} />
             </div>
           </div>
         </div>
         <div className='project-form-body-buttons'>
           <button className='project-form-body-buttons__submit'
             type='submit'>
-            作成
+            {buttonText}
           </button>
         </div>
       </form>
     </div>
-  )
+  );
 };
 
 export default ProjectForm;

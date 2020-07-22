@@ -6,6 +6,7 @@ $white_color: #fff;
 $dark-gray: #666;
 
 .modal {
+  z-index: 100;
   position: fixed;
   top: 0;
   right: 0;
