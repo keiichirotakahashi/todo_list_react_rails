@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Flash = (props) => {
+const Flash = props => {
   const flash = props.flashData;
 
-  const isVisibleClass = (isVisible) => {
+  const isVisibleClass = isVisible => {
     if (isVisible) {
       return 'is-visible';
     } else {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TaskForm from './TaskForm';
 import TaskCard from './TaskCard';
 
-const Project = (props) => {
+const Project = props => {
   const projectId = props.match.params.id;
   const [projectName, setProjectName] = useState('');
   const [tasks, setTasks] = useState([]);
@@ -50,15 +50,21 @@ const Project = (props) => {
     return cleanup;
   }, []);
 
-  const handleTaskFormChange = (event) => {
+  const handleTaskFormChange = event => {
     const { name, value } = event.target;
-    setTaskForm({...taskForm, [name]: value});
-  }
+    setTaskForm({ ...taskForm, [name]: value });
+  };
 
-  const handleTaskFormSubmit = async (event) => {
+  const handleTaskFormSubmit = (event, id) => {
     event.preventDefault();
-    setTaskFormErrors([]);
     props.removeFlashNow();
+
+    if (id) return patchTask(id, taskForm);
+    postTask();
+  };
+  
+  const postTask = async () => {
+    setTaskFormErrors([]);
 
     try {
       const response = await fetch(`/api/v1/projects/${projectId}/tasks`, {
@@ -67,7 +73,7 @@ const Project = (props) => {
           "Content-Type": "application/json; charset=utf-8",
           "X-CSRF-Token": csrfToken
         },
-        body: JSON.stringify({task: taskForm})
+        body: JSON.stringify({ task: taskForm })
       });
 
       if (response.ok) {
@@ -85,12 +91,12 @@ const Project = (props) => {
       const json = await response.json();
       setTaskFormErrors(json);
       props.showErrorFlash('ToDoの作成に失敗しました。');
-    } catch(error) {
+    } catch (error) {
       props.showErrorFlash();
-    }   
-  }
+    }
+  };
 
-  const buildModalTaskForm = async (id) => {
+  const buildModalTaskForm = async id => {
     props.removeFlashNow();
 
     try {
@@ -100,29 +106,29 @@ const Project = (props) => {
         name: json.name,
         due_on: json.due_on
       });
-    } catch(error) {
+    } catch (error) {
       props.showErrorFlash();
     }
-  }
+  };
 
-  const handleModalTaskFormChange = (event) => {
+  const handleModalTaskFormChange = event => {
     const { name, value } = event.target;
-    setModalTaskForm({...modalTaskForm, [name]: value});
-  }
+    setModalTaskForm({ ...modalTaskForm, [name]: value });
+  };
 
   const handleModalTaskFormSubmit = (event, id) => {
     event.preventDefault();
     patchTask(id, modalTaskForm);
-  }
+  };
 
   const toggleStatus = (id, status) => {
     const toggledStatus = status === 'todo' ? 'done' : 'todo';
     patchTask(id, {status: toggledStatus});
-  }
+  };
 
   const removeModalTaskFormErrors = () => {
     setModalTaskFormErrors([]);
-  }
+  };
 
   const patchTask = async (id, attributes) => {
     removeModalTaskFormErrors();
@@ -140,11 +146,10 @@ const Project = (props) => {
 
       if (response.ok) {
         const json = await response.json();
-        const copiedTasks = tasks.map(task => {
+        setTasks(tasks.map(task => {
           if (task.id === json.id) return json;
           return task;
-        });
-        setTasks(copiedTasks);
+        }));
         props.showNoticeFlash('ToDoを更新しました。');
         return;
       }
@@ -152,19 +157,19 @@ const Project = (props) => {
       const json = await response.json();
       setModalTaskFormErrors(json);
       props.showErrorFlash('ToDoの更新に失敗しました。');
-    } catch(error) {
+    } catch (error) {
       props.showErrorFlash();
     }
-  }
+  };
 
   const resetModalTaskForm = () => {
     setModalTaskForm({
       name: '',
       due_on: ''
     });
-  }
+  };
 
-  const removeTask = async (id) => {
+  const removeTask = async id => {
     props.removeFlashNow();
 
     try {
@@ -177,19 +182,19 @@ const Project = (props) => {
         return task.id !== json.id;
       }));
       props.showNoticeFlash('ToDoを削除しました。');
-    } catch(error) {
+    } catch (error) {
       props.showErrorFlash();
     }
-  }
+  };
 
-  const taskComponents = tasks.map((task) =>
+  const taskList = tasks.map(task =>
     <TaskCard
       key={task.id}
       taskData={task}
       toggleStatus={toggleStatus}
       removeTask={removeTask}
       modalTaskFormData={modalTaskForm}
-      formErrorsData={modalTaskFormErrors}
+      modalTaskFormErrorsData={modalTaskFormErrors}
       buildModalTaskForm={buildModalTaskForm}
       handleModalTaskFormChange={handleModalTaskFormChange}
       handleModalTaskFormSubmit={handleModalTaskFormSubmit}
@@ -203,15 +208,19 @@ const Project = (props) => {
         {projectName}
       </h1>
       <div className='project-task-cards'>
-        <TaskForm
-          taskFormData={taskForm}
-          formErrorsData={taskFormErrors}
-          handleTaskFormChange={handleTaskFormChange}
-          handleTaskFormSubmit={handleTaskFormSubmit} />
-        {taskComponents}
+        <div className='project-task-cards-form'>
+          <TaskForm
+            formName={'新しいToDoを作成する'}
+            buttonText={'作成'}
+            taskFormData={taskForm}
+            formErrorsData={taskFormErrors}
+            handleTaskFormChange={handleTaskFormChange}
+            handleTaskFormSubmit={handleTaskFormSubmit} />
+        </div>
+        {taskList}
       </div>
     </div >
   );
-}
+};
 
 export default Project;

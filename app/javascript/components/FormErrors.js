@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FormErrors = (props) => {
+const FormErrors = props => {
   const formErrors = props.formErrorsData;
 
   const formattedFormErrors = formErrors.map((error, index) =>
@@ -20,6 +20,6 @@ const FormErrors = (props) => {
       }
     </React.Fragment>
   );
-}
+};
 
 export default FormErrors;

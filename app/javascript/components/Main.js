@@ -12,23 +12,23 @@ const Main = () => {
   });
   let timer = null;
 
-  const showNoticeFlash = (message) => {
+  const showNoticeFlash = message => {
     setFlash({
       isVisible: true,
       status: 'notice',
       message: message
     });
     removeFlashLater();
-  }
+  };
 
-  const showErrorFlash = (message) => {
+  const showErrorFlash = message => {
     setFlash({
       isVisible: true,
       status: 'error',
       message: message ? message : 'エラーが発生しました。'
     });
     removeFlashLater();
-  }
+  };
 
   const removeFlash = () => {
     setFlash({
@@ -36,16 +36,16 @@ const Main = () => {
       status: 'hidden',
       message: ''
     });
-  }
+  };
 
   const removeFlashNow = () => {
     clearTimeout(timer);
     removeFlash();
-  }
+  };
 
   const removeFlashLater = () => {
     timer = setTimeout(() => { removeFlash() }, 3000);
-  }
+  };
 
   return (
     <main className='main'>
@@ -71,6 +71,6 @@ const Main = () => {
       </div>
     </main>
   );
-}
+};
 
 export default Main;

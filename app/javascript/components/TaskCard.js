@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import TaskFormModal from './TaskFormModal';
+import Modal from './Modal';
+import TaskForm from './TaskForm';
 
-const TaskCard = (props) => {
-  const [isTaskFormModalOpen, setIsTaskFormModalOpen] = useState(false);
+const TaskCard = props => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const id = props.taskData.id;
   const name = props.taskData.name;
   const dueOn = new Date(props.taskData.due_on.replace(/-/g, '/'));
@@ -10,25 +11,45 @@ const TaskCard = (props) => {
   const createdAt = new Date(props.taskData.created_at);
   const createdDate = `${createdAt.getFullYear()}年${createdAt.getMonth() + 1}月${createdAt.getDate()}日`;
   const status = props.taskData.status;
+  const modalTaskForm = props.modalTaskFormData;
+  const modalTaskFormErrors = props.modalTaskFormErrorsData;
 
-  const translateStatus = (status) => {
+  const translateStatus = status => {
     switch (status) {
       case 'todo':
         return '未完了';
       case 'done':
         return '完了';
     }
-  }
+  };
 
-  const handleClickEdit = (id) => {
+  const handleClickEdit = id => {
     props.buildModalTaskForm(id);
-    setIsTaskFormModalOpen(true);
-  }
+    setIsModalOpen(true);
+  };
 
   const handleClickModalClose = () => {
-    setIsTaskFormModalOpen(false);
+    setIsModalOpen(false);
     props.resetModalTaskForm();
     props.removeModalTaskFormErrors();
+  };
+
+  let modal;
+  if (isModalOpen) {
+    modal = (
+      <Modal
+        modalBody={
+          <TaskForm
+            formName={'ToDoを更新する'}
+            buttonText={'保存'}
+            id={id}
+            taskFormData={modalTaskForm}
+            formErrorsData={modalTaskFormErrors}
+            handleTaskFormChange={props.handleModalTaskFormChange}
+            handleTaskFormSubmit={props.handleModalTaskFormSubmit} />
+        }
+        handleClickModalClose={handleClickModalClose} />
+    );
   }
 
   return(
@@ -74,16 +95,9 @@ const TaskCard = (props) => {
           </div>
         </div>
       </div>
-      <TaskFormModal
-        id={id}
-        isTaskFormModalOpen={isTaskFormModalOpen}
-        handleClickModalClose={handleClickModalClose}
-        modalTaskFormData={props.modalTaskFormData}
-        formErrorsData={props.formErrorsData}
-        handleModalTaskFormChange={props.handleModalTaskFormChange}
-        handleModalTaskFormSubmit={props.handleModalTaskFormSubmit} />
+      {modal}
     </div>
   );
-}
+};
 
 export default TaskCard;
