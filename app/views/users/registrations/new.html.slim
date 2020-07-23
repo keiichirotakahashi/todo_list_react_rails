@@ -1,0 +1,19 @@
+.signup
+  .signup-box
+    h2.signup-box__heading
+      | サインアップ
+
+    = form_for(resource, as: resource_name, url: signup_path, html: { class: 'signup-box-form' }) do |f|
+      = render 'users/shared/error_messages', resource: resource
+
+      .signup-box-form-field
+        = f.text_field :username, placeholder: 'ユーザーネーム', autofocus: true
+
+      .signup-box-form-field
+        = f.password_field :password, placeholder: 'パスワード'
+
+      .signup-box-form-actions
+        = f.submit 'サインアップ'
+
+    .signup-box-links
+      = link_to 'ログイン', login_path, class: 'signup-box-links__login'

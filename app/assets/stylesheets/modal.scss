@@ -1,0 +1,56 @@
+// ================================
+//         task_form_modal
+// ================================
+
+$white_color: #fff;
+$dark-gray: #666;
+
+.modal {
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+
+  .modal-close {
+    text-align: right;
+    width: 80%;
+    max-width: 860px;
+    height: 7.5vh;
+    min-height: 60px;
+    margin: 27.5vh auto 0;
+
+    @media screen and (max-width: 767px) {
+      margin: 25vh auto 0;
+    }
+
+    .modal-close__button {
+      color: $white_color;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      &:hover {
+        color: $dark-gray;
+      }
+    }
+  }
+
+  .modal-body {
+    color: $dark-gray;
+    background: $white_color;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 800px;
+    min-height: 120px;
+    margin: 0 auto 45vh;
+    padding: 20px 30px;
+  
+    @media screen and (max-width: 767px) {
+      padding: 20px 15px;
+      min-height: 172px;
+      margin: 0 auto 40vh;
+    }
+  }
+}

@@ -1,10 +1,24 @@
 ja:
   activerecord:
     models:
+      user: ユーザー
       task: タスク
     attributes: &attributes
+      user:
+        id: ID
+        username: ユーザーネーム
+        password: パスワード
+        created_at: 作成日時
+        updated_at: 更新日時
+      project:
+        id: ID
+        user: ユーザー
+        name: プロジェクト名
+        created_at: 作成日時
+        updated_at: 更新日時
       task:
         id: ID
+        project: プロジェクト
         name: ToDo名
         status: ステータス
         due_on: 期限

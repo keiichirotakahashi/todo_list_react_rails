@@ -13,13 +13,6 @@ $light-gray: #dbdbdb;
 .task-form {
   color: $dark-gray;
   background: $white_color;
-  border-radius: 10px;
-  margin-bottom: 28px;
-  padding: 20px 30px;
-
-  @media screen and (max-width: 767px) {
-    padding: 20px 15px;
-  }
 
   .task-form__name {
     font-size: 20px;

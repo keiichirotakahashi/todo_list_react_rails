@@ -1,0 +1,27 @@
+// ================================
+//           project_top
+// ================================
+
+$purple_color: #474ba5;
+
+.project-top {
+
+  .project-top__title {
+    color: $purple_color;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+
+  .project-top-cards {
+    display: -webkit-flex;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+
+    @media screen and (max-width: 767px) {
+      margin: 0;
+    }
+  }
+}

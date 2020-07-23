@@ -1,0 +1,61 @@
+// ================================
+//           project_card
+// ================================
+
+$white_color: #fff;
+$dark-gray: #666;
+$light-gray: #dbdbdb;
+$off-white: #fdfdfd;
+
+.project-card {
+  position: relative;
+  background: $white_color;
+  width: 160px;
+  height: 160px;
+  border-radius: 30px;
+  margin: 0 15px 30px;
+  cursor: pointer;
+  &:hover {
+    background: $off-white;
+  }
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 0 0 20px;
+  }
+
+  .project-card-inner {
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $dark-gray;
+
+    .project-card-inner__name {
+      font-size: 16px;
+      font-weight: 500;
+      word-break: break-all;
+      text-align: center;
+      padding: 20px;
+
+      @media screen and (max-width: 767px) {
+        font-size: 18px;
+      }
+    }
+  }
+
+  .project-card-more {
+    position: absolute;
+    top: 4px;
+    right: 8px;
+  }
+
+  .project-card-menu {
+    position: absolute;
+    top: 36px;
+    right: 8px;
+  }
+}

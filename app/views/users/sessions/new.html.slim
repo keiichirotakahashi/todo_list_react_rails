@@ -1,0 +1,19 @@
+.login
+  .login-box
+    h2.login-box__heading
+      | ログイン
+
+    = form_for(resource, as: resource_name, url: login_path, html: { class: 'login-box-form' }) do |f|
+      = render 'users/shared/flash'
+
+      .login-box-form-field
+        = f.text_field :username, placeholder: 'ユーザーネーム', autofocus: true
+    
+      .login-box-form-field
+        = f.password_field :password, placeholder: 'パスワード'
+    
+      .login-box-form-actions
+        = f.submit 'ログイン'
+
+    .login-box-links
+      = link_to 'サインアップ', signup_path, class: 'login-box-links__signup'

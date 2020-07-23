@@ -32,10 +32,23 @@ Rails.application.routes.draw do
   # Api
   namespace 'api' do
     namespace 'v1' do
-      resources :tasks, only: %i[index show create update destroy]
+      resources :projects, only: %i[index show create update destroy] do
+        resources :tasks, only: %i[index show create update destroy]
+      end
     end
   end
 
   # User
-  root 'home#index'
+  devise_for :users, skip: [:registrations, :sessions]
+  devise_scope :user do
+    get '/signup', to: 'users/registrations#new'
+    post '/signup', to: 'users/registrations#create'
+    get '/profile/edit', to: 'users/registrations#edit'
+    patch '/profile', to: 'users/registrations#update'
+    get '/login', to: 'users/sessions#new'
+    post '/login', to: 'users/sessions#create'
+    delete '/logout', to: 'users/sessions#destroy'
+  end
+  get '/app', to: 'home#index'
+  get '/', to: redirect('/app', status: 301)
 end

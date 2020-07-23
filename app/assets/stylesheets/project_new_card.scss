@@ -1,0 +1,55 @@
+// ================================
+//        project_form_card
+// ================================
+
+$white_color: #fff;
+$sub_color: #e4996d;
+
+.project-new-card {
+  width: 160px;
+  height: 160px;
+  margin: 0 15px 30px;
+  cursor: pointer;
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    
+    margin: 0 0 20px;
+  }
+
+  .project-new-card-inner {
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $sub_color;
+    color: $white_color;
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+
+    &:hover {
+      opacity: 0.75;
+    }
+
+    @media screen and (max-width: 767px) {
+      width: initial;
+      height: initial;
+      border-radius: 10px;
+    }
+
+    .project-new-card-inner__name {
+      font-size: 16px;
+      font-weight: 500;
+      word-break: break-all;
+      text-align: center;
+      padding: 20px;
+
+      @media screen and (max-width: 767px) {
+        font-size: 18px;
+      }
+    }
+  }
+}

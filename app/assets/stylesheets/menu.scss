@@ -1,0 +1,26 @@
+// ================================
+//              menu
+// ================================
+
+$white_color: #fff;
+$dark-gray: #666;
+$light-gray: #dbdbdb;
+$super-light-gray: #f2f2f2;
+
+.menu {
+  background: $white_color;
+  color: $dark-gray;
+  width: 60px;
+  border: 1px solid $light-gray;
+  border-radius: 5px;
+  padding: 5px 0;
+
+  .menu__item {
+    text-align: center;
+    padding: 5px 0;
+
+    &:hover {
+      background: $super-light-gray;
+    }
+  }
+}
