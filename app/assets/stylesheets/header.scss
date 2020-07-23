@@ -37,5 +37,14 @@ $sub_color: #e4996d;
         }
       }
     }
+
+    .header-navi__logout {
+
+      a {
+        color: $sub_color;
+        font-size: 16px;
+        font-weight: bold;
+      }
+    }
   }
 }

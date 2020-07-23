@@ -10,6 +10,11 @@ const Header = () => {
             ToDoリスト
           </Link>
         </h1>
+        <div className='header-navi__logout'>
+          <a rel='nofollow' data-method='delete' href='/logout'>
+            ログアウト
+          </a>
+        </div>
       </div>
     </header>
   );
