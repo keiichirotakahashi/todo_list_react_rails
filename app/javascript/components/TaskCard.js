@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Modal from './Modal';
 import TaskForm from './TaskForm';
 
@@ -6,22 +6,27 @@ const TaskCard = props => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const id = props.taskData.id;
   const name = props.taskData.name;
-  const dueOn = new Date(props.taskData.due_on.replace(/-/g, '/'));
-  const dueDate = `${dueOn.getFullYear()}年${dueOn.getMonth() + 1}月${dueOn.getDate()}日`;
-  const createdAt = new Date(props.taskData.created_at);
-  const createdDate = `${createdAt.getFullYear()}年${createdAt.getMonth() + 1}月${createdAt.getDate()}日`;
+  const dueOn = props.taskData.due_on;
+  const dueDateString = useMemo(() => {
+    const dueDate = new Date(dueOn.replace(/-/g, '/'));
+    return `${dueDate.getFullYear()}年${dueDate.getMonth() + 1}月${dueDate.getDate()}日`;
+  }, [dueOn]);
+  const createdAt = props.taskData.created_at;
+  const createdDateString = useMemo(() => {
+    const createdDate = new Date(createdAt);
+    return `${createdDate.getFullYear()}年${createdDate.getMonth() + 1}月${createdDate.getDate()}日`;
+  }, [createdAt]);
   const status = props.taskData.status;
-  const modalTaskForm = props.modalTaskFormData;
-  const modalTaskFormErrors = props.modalTaskFormErrorsData;
-
-  const translateStatus = status => {
+  const translatedStatus = useMemo(() => {
     switch (status) {
       case 'todo':
         return '未完了';
       case 'done':
         return '完了';
     }
-  };
+  }, [status]); 
+  const modalTaskForm = props.modalTaskFormData;
+  const modalTaskFormErrors = props.modalTaskFormErrorsData;
 
   const handleClickEdit = id => {
     props.buildModalTaskForm(id);
@@ -64,7 +69,7 @@ const TaskCard = props => {
               期限：
             </div>
             <div className='task-card-body-info-due-date__value'>
-              {dueDate}
+              {dueDateString}
             </div>
           </div>
           <div className='task-card-body-info-created-date'>
@@ -72,7 +77,7 @@ const TaskCard = props => {
               作成日：
             </div>
             <div className='task-card-body-info-created-date__value'>
-              {createdDate}
+              {createdDateString}
             </div>
           </div>
         </div>
@@ -80,7 +85,7 @@ const TaskCard = props => {
           <div className='task-card-body-buttons-top'>
             <button className={`task-card-body-buttons-top__status--${status}`}
               onClick={() => {props.toggleStatus(id, status)}}>
-              {translateStatus(props.taskData.status)}
+              {translatedStatus}
             </button>
           </div>
           <div className='task-card-body-buttons-bottom'>

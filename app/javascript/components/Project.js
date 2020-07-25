@@ -62,7 +62,7 @@ const Project = props => {
     if (id) return patchTask(id, taskForm);
     postTask();
   };
-  
+
   const postTask = async () => {
     setTaskFormErrors([]);
 
@@ -123,7 +123,7 @@ const Project = props => {
 
   const toggleStatus = (id, status) => {
     const toggledStatus = status === 'todo' ? 'done' : 'todo';
-    patchTask(id, {status: toggledStatus});
+    patchTask(id, { status: toggledStatus });
   };
 
   const removeModalTaskFormErrors = () => {
@@ -141,7 +141,7 @@ const Project = props => {
           "Content-Type": "application/json; charset=utf-8",
           "X-CSRF-Token": csrfToken
         },
-        body: JSON.stringify({task: attributes})
+        body: JSON.stringify({ task: attributes })
       });
 
       if (response.ok) {
@@ -175,7 +175,7 @@ const Project = props => {
     try {
       const response = await fetch(`/api/v1/projects/${projectId}/tasks/${id}`, {
         method: "DELETE",
-        headers: {"X-CSRF-Token": csrfToken}
+        headers: { "X-CSRF-Token": csrfToken }
       });
       const json = await response.json();
       setTasks(tasks.filter(task => {
@@ -202,7 +202,7 @@ const Project = props => {
       resetModalTaskForm={resetModalTaskForm} />
   );
 
-  return(
+  return (
     <div className='project'>
       <h1 className='project__title'>
         {projectName}
