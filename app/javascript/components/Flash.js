@@ -1,20 +1,17 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 const Flash = props => {
-  const flash = props.flashData;
+  const { isVisible, status, message } = props.flashData;
 
-  const isVisibleClass = isVisible => {
-    if (isVisible) {
-      return 'is-visible';
-    } else {
-      return '';
-    }
-  };
+  const isVisibleClassName = useMemo(() => {
+    if (isVisible) return 'is-visible';
+    return '';
+  }, [isVisible]);
 
-  return(
-    <div className={`flash ${isVisibleClass(flash.isVisible)}`}>
-      <div className={`flash__message--${flash.status}`}>
-        {flash.message}
+  return (
+    <div className={`flash ${isVisibleClassName}`}>
+      <div className={`flash__message--${status}`}>
+        {message}
       </div>
     </div>
   );
